@@ -1,0 +1,224 @@
+@import "tailwindcss";
+
+/* ─── Tailwind v4: design tokens ─────────────────────────────────────────── */
+@theme {
+  /* HybridRox brand palette */
+  --color-hx-base:   #0D0D0D;
+  --color-hx-carbon: #1A1A1A;
+  --color-hx-hueso:  #F5F5F5;
+  --color-hx-acento: #E8FF00;
+
+  /* shadcn semantic tokens (mapped from :root HSL vars below) */
+  --color-background:         hsl(var(--background));
+  --color-foreground:         hsl(var(--foreground));
+  --color-card:               hsl(var(--card));
+  --color-card-foreground:    hsl(var(--card-foreground));
+  --color-popover:            hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary:            hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary:          hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted:              hsl(var(--muted));
+  --color-muted-foreground:   hsl(var(--muted-foreground));
+  --color-accent:             hsl(var(--accent));
+  --color-accent-foreground:  hsl(var(--accent-foreground));
+  --color-destructive:        hsl(var(--destructive));
+  --color-border:             hsl(var(--border));
+  --color-input:              hsl(var(--input));
+  --color-ring:               hsl(var(--ring));
+
+  /* Typography */
+  --font-display: var(--font-bebas-neue), sans-serif;
+  --font-sans:    var(--font-inter), sans-serif;
+
+  /* Border radius — brutalista: sin redondeo */
+  --radius: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+
+  /* Spacing scale responsivo */
+  --spacing-xs:  clamp(0.25rem, 0.5vw, 0.5rem);
+  --spacing-sm:  clamp(0.5rem, 1vw, 1rem);
+  --spacing-md:  clamp(1rem, 2vw, 1.5rem);
+  --spacing-lg:  clamp(1.5rem, 3vw, 2.5rem);
+  --spacing-xl:  clamp(2.5rem, 5vw, 4rem);
+  --spacing-2xl: clamp(4rem, 8vw, 8rem);
+  --spacing-3xl: clamp(6rem, 12vw, 12rem);
+}
+
+/* ─── shadcn HSL custom properties ──────────────────────────────────────── */
+:root {
+  --background: 0 0% 5%;           /* #0D0D0D */
+  --foreground: 0 0% 100%;
+
+  --card: 0 0% 8%;
+  --card-foreground: 0 0% 100%;
+
+  --popover: 0 0% 8%;
+  --popover-foreground: 0 0% 100%;
+
+  --primary: 65 100% 50%;          /* #E8FF00 — lima */
+  --primary-foreground: 0 0% 5%;
+
+  --secondary: 0 0% 12%;
+  --secondary-foreground: 0 0% 100%;
+
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 65%;
+
+  --accent: 65 100% 50%;
+  --accent-foreground: 0 0% 5%;
+
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 0 0% 15%;
+  --input: 0 0% 15%;
+  --ring: 65 100% 50%;
+}
+
+/* ─── Base styles ────────────────────────────────────────────────────────── */
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+    min-width: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 400;
+    text-wrap: balance;
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  h1 { font-size: clamp(3rem, 8vw, 6rem); line-height: 0.95; }
+  h2 { font-size: clamp(2.25rem, 6vw, 4.5rem); }
+  h3 { font-size: clamp(1.75rem, 4vw, 3rem); }
+  h4 { font-size: clamp(1.25rem, 2.5vw, 2rem); }
+
+  p {
+    max-width: 65ch;
+  }
+
+  *:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+}
+
+/* ─── Utility classes de marca ───────────────────────────────────────────── */
+@layer utilities {
+  /* Animaciones de la marca */
+  @keyframes hx-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.8; transform: scale(0.95); }
+  }
+
+  @keyframes hx-bolt-glow {
+    0%, 100% { filter: drop-shadow(0 0 2px #E8FF00); }
+    50%       { filter: drop-shadow(0 0 12px #E8FF00); }
+  }
+
+  .animate-hx-pulse    { animation: hx-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+  .animate-hx-bolt-glow { animation: hx-bolt-glow 1.5s ease-in-out infinite; }
+}
+
+/* ─── Componentes reutilizables ──────────────────────────────────────────── */
+@layer components {
+  /* Botón primario brutalista (CTA lima) */
+  .btn-brutalist {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    padding: 0.75rem 2.5rem;
+    min-height: 44px;
+    text-transform: uppercase;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    letter-spacing: 0.05em;
+    transition: all 0.2s ease-out;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+  }
+
+  .btn-brutalist:hover   { background-color: hsl(var(--foreground)); color: hsl(var(--background)); }
+  .btn-brutalist:active  { transform: scale(0.98); }
+  .btn-brutalist:disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+
+  /* Botón outline */
+  .btn-outline {
+    background-color: transparent;
+    color: hsl(var(--foreground));
+    padding: 0.75rem 2.5rem;
+    min-height: 44px;
+    text-transform: uppercase;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    letter-spacing: 0.05em;
+    transition: all 0.2s ease-out;
+    border: 1px solid hsl(var(--border));
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+  }
+
+  .btn-outline:hover { background-color: hsl(var(--foreground)); color: hsl(var(--background)); border-color: hsl(var(--foreground)); }
+
+  /* Input brutalista */
+  .input-brutalist {
+    background-color: transparent;
+    border: 1px solid hsl(var(--border));
+    color: hsl(var(--foreground));
+    padding: 0.75rem 1rem;
+    min-height: 44px;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    border-radius: 0;
+    width: 100%;
+    transition: border-color 0.2s ease-out;
+  }
+
+  .input-brutalist:focus          { outline: none; border-color: hsl(var(--primary)); box-shadow: 0 0 0 1px hsl(var(--primary)); }
+  .input-brutalist::placeholder   { color: hsl(var(--muted-foreground)); }
+
+  /* Layout helpers */
+  .section-spacing   { padding-top: var(--spacing-3xl); padding-bottom: var(--spacing-3xl); }
+  .container-custom  { width: 100%; max-width: 1440px; margin-inline: auto; padding-inline: var(--spacing-lg); }
+
+  /* Card */
+  .card-premium {
+    background-color: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.4s ease, border-color 0.4s ease;
+  }
+
+  .card-premium:hover { transform: translateY(-4px); border-color: hsl(var(--foreground)); }
+}
