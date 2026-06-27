@@ -90,3 +90,9 @@ temp/
 .vercel
 .netlify
 .turbo
+
+# ===========================
+# Skills
+# ===========================
+apps/skills/.next/
+*.skill
